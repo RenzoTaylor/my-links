@@ -21,12 +21,13 @@ window.addEventListener('resize', () => {
 });
 
 class Particle {
-    constructor(x, y, size, color, weight) {
+    constructor(x, y, size, color) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.color = color;
-        this.weight = weight;
+        this.xSpeed = Math.random() * 2 - 1; // Horizontal movement speed
+        this.ySpeed = Math.random() * 2 - 1; // Vertical movement speed
     }
 
     draw() {
@@ -37,16 +38,20 @@ class Particle {
     }
 
     update() {
-        if (this.y > canvas.height) {
-            this.y = 0 - this.size;
-            this.x = Math.random() * canvas.width * 1.3;
-            this.weight = Math.random() * 0.5 + 0.1;
+        // Move particles
+        this.x += this.xSpeed;
+        this.y += this.ySpeed;
+
+        // Bounce off the edges
+        if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+            this.xSpeed *= -1;
         }
 
-        this.weight += 0.01;
-        this.y += this.weight;
-        this.x += Math.random() * 2 - 1;
+        if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+            this.ySpeed *= -1;
+        }
 
+        // Adjust movement if near the mouse
         if (
             mouse.x &&
             mouse.y &&
@@ -55,7 +60,8 @@ class Particle {
             this.y < mouse.y + 50 &&
             this.y > mouse.y - 50
         ) {
-            this.y -= this.weight * 20;
+            this.xSpeed += (Math.random() - 0.5) * 0.5;
+            this.ySpeed += (Math.random() - 0.5) * 0.5;
         }
     }
 }
@@ -67,8 +73,7 @@ function init() {
         let y = Math.random() * canvas.height;
         let size = Math.random() * 5 + 1;
         let color = 'rgba(255, 255, 255, 0.8)';
-        let weight = 1;
-        particles.push(new Particle(x, y, size, color, weight));
+        particles.push(new Particle(x, y, size, color));
     }
 }
 
