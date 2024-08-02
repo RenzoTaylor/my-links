@@ -8,6 +8,11 @@ body {
     position: relative;
 }
 
+header {
+    background-color: red;
+    color: #fff;
+    padding: 1em 0;
+}
 
 main {
     padding: 2em;
