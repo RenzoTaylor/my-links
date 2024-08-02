@@ -26,8 +26,8 @@ class Particle {
         this.y = y;
         this.size = size;
         this.color = color;
-        this.xSpeed = Math.random() * 2 - 1; // Horizontal movement speed
-        this.ySpeed = Math.random() * 2 - 1; // Vertical movement speed
+        this.xSpeed = (Math.random() * 2 - 1) * 0.5; // Horizontal movement speed
+        this.ySpeed = (Math.random() * 2 - 1) * 0.5; // Vertical movement speed
     }
 
     draw() {
@@ -37,10 +37,10 @@ class Particle {
         ctx.fill();
     }
 
-    update() {
+    update(deltaTime) {
         // Move particles
-        this.x += this.xSpeed;
-        this.y += this.ySpeed;
+        this.x += this.xSpeed * deltaTime;
+        this.y += this.ySpeed * deltaTime;
 
         // Bounce off the edges
         if (this.x + this.size > canvas.width || this.x - this.size < 0) {
@@ -60,8 +60,8 @@ class Particle {
             this.y < mouse.y + 50 &&
             this.y > mouse.y - 50
         ) {
-            this.xSpeed += (Math.random() - 0.5) * 0.5;
-            this.ySpeed += (Math.random() - 0.5) * 0.5;
+            this.xSpeed += (Math.random() - 0.5) * 0.1;
+            this.ySpeed += (Math.random() - 0.5) * 0.1;
         }
     }
 }
@@ -77,11 +77,16 @@ function init() {
     }
 }
 
-function animate() {
+let lastTime = 0;
+
+function animate(time) {
+    const deltaTime = (time - lastTime) / 16.67; // Normalize to 60 FPS
+    lastTime = time;
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
+        particles[i].update(deltaTime);
         particles[i].draw();
     }
     connectParticles();
@@ -111,4 +116,4 @@ function connectParticles() {
 }
 
 init();
-animate();
+requestAnimationFrame(animate);
