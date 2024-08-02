@@ -26,8 +26,8 @@ class Particle {
         this.y = y;
         this.size = size;
         this.color = color;
-        this.xSpeed = (Math.random() * 2 - 1) * 0.5; // Horizontal movement speed
-        this.ySpeed = (Math.random() * 2 - 1) * 0.5; // Vertical movement speed
+        this.xSpeed = (Math.random() * 2 - 1) * 0.2; // Reduced horizontal movement speed
+        this.ySpeed = (Math.random() * 2 - 1) * 0.2; // Reduced vertical movement speed
     }
 
     draw() {
