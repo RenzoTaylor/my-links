@@ -32,7 +32,7 @@ li {
 }
 
 a {
-    color: white;
+    color: teal;
     text-decoration: none;
     padding: 0.5em 10em;
     border: 2px solid teal;
@@ -42,8 +42,8 @@ a {
 }
 
 a:hover {
-    background-color: yellow;
-    color: #FFFF00;
+    background-color: teal;
+    color: #fff;
 }
 
 canvas {
